@@ -24,4 +24,12 @@ oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"select * from prod
 }
 ```
 
-- Implement __**GET** /products__ and __**POST** /products__ flows
+### **GET** /products
+```
+Invoke SQL -> select * from products
+```
+
+### **POST** /products
+```
+Invoke SQL -> INSERT INTO PRODUCTS(NAME,ORG,VERSION) VALUES(:#NAME,:#ORG,:#VERSION);
+```
