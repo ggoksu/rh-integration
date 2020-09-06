@@ -14,7 +14,7 @@ oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"INSERT INTO produc
 oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"select * from products;\""
 ```
 
-### Create API Integration in Fuse with:
+### Create Products API Integration in Fuse:
 ```
 {
     "id": 0,
@@ -23,3 +23,5 @@ oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"select * from prod
     "version": 0
 }
 ```
+
+### Implement **GET** /products and **POST** /products
