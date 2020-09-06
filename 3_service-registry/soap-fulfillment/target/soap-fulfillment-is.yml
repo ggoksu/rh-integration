@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: List
+items:
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    name: soap-fulfillment
+  spec:
+    tags:
+    - from:
+        kind: ImageStreamImage
+        name: soap-fulfillment@sha256:b8ab9e64ac03d7ba5c0890956be5f03e900cc3fc09c91c87d7adc3e57476ebe5
+        namespace: integrationplatform
+      name: 1.0.0

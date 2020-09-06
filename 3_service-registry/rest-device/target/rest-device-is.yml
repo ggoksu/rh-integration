@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: List
+items:
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    name: rest-device
+  spec:
+    tags:
+    - from:
+        kind: ImageStreamImage
+        name: rest-device@sha256:77bef66e481751aa35a3576676e312b80cfe00006eb8eb1ae646f9afab5f6509
+        namespace: integrationplatform
+      name: 1.0.0

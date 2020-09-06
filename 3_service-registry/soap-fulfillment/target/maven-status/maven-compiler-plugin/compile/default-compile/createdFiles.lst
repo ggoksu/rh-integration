@@ -1,0 +1,9 @@
+org/mycompany/Helper.class
+org/example/s2/package-info.class
+org/example/s2/S2.class
+org/example/s2/FulfillmentRequest.class
+org/example/s2/FulfillmentResponse.class
+org/example/s2/FulfillmentRequest$Device.class
+org/mycompany/Application.class
+org/example/s2/ObjectFactory.class
+org/example/s2/S2_Service.class

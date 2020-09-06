@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="             http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+
+    <cxf:cxfEndpoint
+        id="cxfS2"
+        address="/fulfillment"
+        serviceClass="org.example.s2.S2"/>
+
+
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <endpoint id="response" uri="dozer:response?sourceModel=org.example.s2.S2Response&amp;targetModel=io.swagger.client.model.DemoData&amp;mappingFile=transformation.xml"/>
+
+   <!-- ATTENTION HERE:
+        The Maven plugin uses GSON's library to generate POJOs,
+        we need to ensure we use the same library -->
+        <restConfiguration apiContextPath="api-docs" bindingMode="json"
+            component="servlet" contextPath="camel" port="8080" jsonDataFormat="json-gson">
+            <apiProperty key="cors" value="true"/>
+            <apiProperty key="api.title" value="My First Camel REST API"/>
+            <apiProperty key="api.version" value="1.0.0"/>
+        </restConfiguration>
+        <rest id="rest-31bebc04-82eb-44ec-a8ad-fb0fdff5bd80" path="/device">
+
+            <post consumes="application/json" id="orderNew"
+                produces="application/json"
+                type="io.swagger.client.model.DeviceRequest" uri="/ordernew">
+                <param description="request data" name="body"
+                    required="true" type="body"/>
+                <to uri="direct:main"/>
+            </post>
+
+
+        </rest>
+
+
+
+        <route id="main">
+            <from id="_from1" uri="direct:main"/>
+            <setProperty propertyName="request">
+                <simple>${body}</simple>
+            </setProperty>
+            <log id="_log1" message="REST service call received ${body}"/>
+
+
+
+                    <to id="_to2" uri="direct:call-s2"/>
+
+                    <!-- <to id="_to3" uri="ref:response"/> -->
+                    <to uri="direct:map-response" id="direct-27"/>
+
+
+
+            <removeHeaders id="_removeHeaders1" pattern="*"/>
+        </route>
+
+
+
+        <route id="Call S2">
+            <from id="_from3" uri="direct:call-s2"/>
+            <removeHeaders id="_removeHeaders3" pattern="*"/>
+            <setBody id="_setBody2">
+                <!-- <simple>ref:dummyS2</simple> -->
+                <simple>${property.request}</simple>
+            </setBody>
+            <to uri="atlas:map/fulfillment-mapping.adm"/>
+            <setHeader headerName="CamelDestinationOverrideUrl" id="_setHeader2">
+                <!-- <simple>http://s2-demo.192.168.99.126.nip.io/services/s2</simple> -->
+                <simple>http://{{endpoint.fulfillment.server}}/services/s2</simple>
+            </setHeader>
+            <to id="_to5" uri="cxf:bean:cxfS2"/>
+            <log id="_log3" message="got response from S2 ${body[0]}"/>
+            <setProperty propertyName="s2response">
+                <simple>${body[0]}</simple>
+            </setProperty>
+        </route>
+
+        <route id="map-response">
+            <from uri="direct:map-response" id="direct-27"/>
+            <setBody id="body-28">
+                <simple>{}</simple>
+            </setBody>
+            <setProperty propertyName="param1">
+                <simple>org.example.s1.SubscriptionResponse</simple>
+            </setProperty>
+            <setProperty propertyName="param2">
+                <simple>org.example.s2.FulfillmentResponse</simple>
+            </setProperty>
+
+            <to uri="dataformat:json-jackson:unmarshal"/>
+            <to uri="language:simple:${body.put(${property.param1}, ${property.s1response})}?transform=false"/>
+            <to uri="language:simple:${body.put(${property.param2}, ${property.s2response})}?transform=false"/>
+
+            <to uri="atlas:map/response-mapping.adm" id="c4s5"/>
+            <log message="result is:\n ${body}" id="log-40"/>
+        </route> 
+
+
+
+    </camelContext>
+</beans>
