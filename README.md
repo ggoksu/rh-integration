@@ -9,7 +9,6 @@ oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"INSERT INTO produc
 oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"INSERT INTO products(name, org, version) VALUES  ('Fuse', 'Red Hat', 3);\""
 oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"INSERT INTO products(name, org, version) VALUES  ('3Scale', 'Red Hat', 4);\""
 oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"INSERT INTO products(name, org, version) VALUES  ('AMQ', 'Red Hat', 5);\""
-```
 
 oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"select * from products;\""
-
+```
