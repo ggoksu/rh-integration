@@ -1,10 +1,15 @@
 ### Demo - Service Registry
 - Upload **registry_artifacts** for REST and SOAP APIs to Service Registry
 - Define data mappings in AtlasMap
-- Use followig for the Source and Target POJOs
+- Use following for the Source and Target POJOs (Request)
 ```
 io.swagger.client.model.DeviceRequest
 org.example.s2.FulFillmentRequest
+```
+- Use following for the Source and Target POJOs (Response)
+```
+io.swagger.client.model.DeviceResponse
+org.example.s2.FulFillmentResponse
 ```
 - Deploy soap-fulfillment and rest-device to Openshift
 ```
