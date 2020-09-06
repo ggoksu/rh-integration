@@ -24,4 +24,4 @@ oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"select * from prod
 }
 ```
 
-### Implement **GET** /products and **POST** /products
+- Implement **GET** /products and **POST** /products
