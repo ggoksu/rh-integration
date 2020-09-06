@@ -1,7 +1,7 @@
 ## Demo - Fuse Online Integration
 ### Insert some data into PostgreSQL
 ```
-export POD_POSTGRESQL=$(oc get pods | grep syndesis-db | awk '{if ($3 == "Running"){print $1}}'')
+export POD_POSTGRESQL=$(oc get pods | grep syndesis-db | awk '{if ($3 == "Running"){print $1}}')
 
 oc exec -it $POD_POSTGRESQL -- bash -c 'psql -d sampledb -c "CREATE TABLE products(id serial PRIMARY KEY,name VARCHAR (50),org VARCHAR (50),version integer);"'
 
