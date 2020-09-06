@@ -36,7 +36,7 @@ Invoke SQL -> INSERT INTO PRODUCTS(NAME,ORG,VERSION) VALUES(:#NAME,:#ORG,:#VERSI
 
 ## Demo - 3Scale API Management
 ### Import Products API from Openshift
-#### Make Service Discoverable
+- Make Service Discoverable
 ```
 metadata:
   annotations:
@@ -45,5 +45,6 @@ metadata:
     discovery.3scale.net/scheme: http
   labels:
     discovery.3scale.net: 'true'
-
 ```
+- Create Application, Method and Mappings in 3Scale
+- Publish API
