@@ -1,4 +1,5 @@
-# Demo - Fuse Online Integration
+## Demo - Fuse Online Integration
+### Insert some data into PostgreSQL
 ```
 export POD_POSTGRESQL=$(oc get pods | grep syndesis-db | awk '{if ($3 == "Running"){print $1}}'')
 
@@ -11,4 +12,14 @@ oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"INSERT INTO produc
 oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"INSERT INTO products(name, org, version) VALUES  ('AMQ', 'Red Hat', 5);\""
 
 oc exec -it $POD_POSTGRESQL -- bash -c "psql -d sampledb -c \"select * from products;\""
+```
+
+### Create API Integration in Fuse with:
+```
+{
+    "id": 0,
+    "name": "Openshift",
+    "org": "Red Hat",
+    "version": 0
+}
 ```
